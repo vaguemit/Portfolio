@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mit Parikh | Portfolio</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">MIT PARIKH</div>
+        <div class="menu-toggle">Menu</div>
+        <ul class="nav-links">
+            <li><a href="#hero" class="nav-item">Home</a></li>
+            <li><a href="#experience" class="nav-item">Experience</a></li>
+            <li><a href="#projects" class="nav-item">Work</a></li>
+            <li><a href="#about" class="nav-item">About</a></li>
+            <li><a href="#contact" class="nav-item">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Content Wrapper for Smooth Scroll -->
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <!-- Hero Section -->
+            <section id="hero" class="hero-section">
+                <canvas id="hero-canvas"></canvas>
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <div class="reveal-text">Mit</div>
+                        <div class="reveal-text">Parikh</div>
+                    </h1>
+                    <p class="hero-subtitle">DSA & CP Lead | Expert@Codeforces | BTech CS (AI)</p>
+                    <p class="hero-location">Ahmedabad, Gujarat, India</p>
+                </div>
+                <div class="scroll-indicator">
+                    <span>Scroll</span>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="projects-section">
+                <div class="section-header">
+                    <h2>Experience</h2>
+                </div>
+                <div class="experience-list">
+                    <!-- GeeksForGeeks -->
+                    <div class="experience-item">
+                        <div class="exp-date">Aug 2025 - Present</div>
+                        <div class="exp-content">
+                            <h3>Technical Lead</h3>
+                            <h4>GeeksForGeeks Campus Body KU</h4>
+                            <p>Ahmedabad, Gujarat, India</p>
+                        </div>
+                    </div>
+
+                    <!-- Developer Club -->
+                    <div class="experience-item">
+                        <div class="exp-date">Dec 2024 - Present</div>
+                        <div class="exp-content">
+                            <h3>Student Coordinator</h3>
+                            <h4>Developer Club, UIT, Karnavati University</h4>
+                            <p>Gandhinagar, Gujarat, India</p>
+                            <ul class="exp-details">
+                                <li>Managed event logistics and coordinated Codeforces question selection.</li>
+                                <li>Provided guidance in coding, DSA, and competitive programming.</li>
+                                <li>Oversaw visual communication strategies for online presence.</li>
+                                <li>Developed and hosted the Club's official website.</li>
+                                <li>Mentored peers and juniors in Competitive Programming.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="projects-section">
+                <div class="section-header">
+                    <h2>Selected Works</h2>
+                </div>
+                <div class="project-gallery">
+                    <div class="project-item">
+                        <div class="project-info">
+                            <h3><a href="https://algoatlas.tech/" target="_blank" class="project-link">AlgoAtlas</a>
+                            </h3>
+                            <p class="project-role">Competitive Programming Platform (Jan 2025 - Apr 2025)</p>
+                            <p class="project-desc">
+                                A platform to systematically improve competitive programming skills with personalized
+                                practice plans,
+                                curated problems, and in-depth performance analysis. Features include progress tracking
+                                and
+                                performance analysis to help users identify patterns and address mistakes.
+                            </p>
+                            <div class="project-tags">
+                                <span>React</span><span>Node.js</span><span>MongoDB</span><span>Tailwind CSS</span>
+                            </div>
+                        </div>
+                        <a href="https://algoatlas.tech/" target="_blank" class="project-image-link">
+                            <div class="project-image"
+                                style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop');">
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Industrial Safety Project -->
+                    <div class="project-item">
+                        <div class="project-info">
+                            <h3>Industrial Safety Monitoring</h3>
+                            <p class="project-role">IoT System (Upcoming)</p>
+                            <p class="project-desc">
+                                An IoT-based solution designed to enhance workplace safety by monitoring environmental
+                                conditions
+                                and detecting hazards in real-time. (Details coming soon)
+                            </p>
+                            <div class="project-tags">
+                                <span>IoT</span><span>Sensors</span><span>Real-time Monitoring</span>
+                            </div>
+                        </div>
+                        <div class="project-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop');">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About/Skills Section -->
+            <section id="about" class="about-section">
+                <div class="about-container">
+                    <h2 class="outline-text">Education & Skills</h2>
+
+                    <div class="education-block">
+                        <h3>Unitedworld Institute of Technology</h3>
+                        <p>Bachelor of Technology - BTech, Computer Science (AI)</p>
+                        <p class="edu-date">Aug 2023 - Apr 2027</p>
+                    </div>
+
+                    <div class="skills-grid" style="margin-top: 3rem;">
+                        <span class="skill-tag">Project Management</span>
+                        <span class="skill-tag">UI Design</span>
+                        <span class="skill-tag">Front-End Development</span>
+                        <span class="skill-tag">DSA</span>
+                        <span class="skill-tag">Competitive Programming</span>
+                        <span class="skill-tag">Artificial Intelligence</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="contact-section">
+                <div class="contact-content">
+                    <h2>Let's Connect</h2>
+                    <a href="mailto:mitparikh1046@gmail.com" class="email-link">mitparikh1046@gmail.com</a>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/mitparikh-6aaba0333" target="_blank">LinkedIn</a>
+                        <a href="https://codeforces.com/profile/darcasterr" target="_blank">Codeforces</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <p>&copy; 2026 Mit Parikh. All rights reserved.</p>
+                </footer>
+            </section>
+
+        </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>
