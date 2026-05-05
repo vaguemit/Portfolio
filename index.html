@@ -310,25 +310,31 @@
         // Removed SVG shapes, using car.png image
 
         function spawnVehicle() {
+            // Limit to max 3 cars at the same time
+            if (vehiclesLayer.children.length >= 3) return;
+
             const el = document.createElement('div');
             el.className = 'vehicle';
 
             const goRight = Math.random() > 0.5;
-            // Spawn height slightly lower than center (50%). Range: 55% to 80%
             const yPos = 55 + Math.random() * 25; 
             
-            const scale = 0.4 + Math.random() * 0.4; // varied scale for depth
-            const duration = 15 + Math.random() * 25; // 15-40s
+            const scale = 0.4 + Math.random() * 0.4; 
+            const duration = 15 + Math.random() * 25; 
 
             el.innerHTML = `<img src="car.png" alt="flying car" style="width: 100%; height: auto; display: block;" />`;
             
-            // car.png faces left. So if it goes right, we must flip it horizontally (scaleX(-1))
+            // If car faces left natively:
+            // goRight (Left to Right) -> flip horizontally -> scaleX = -scale
+            // goLeft (Right to Left) -> keep normal -> scaleX = scale
+            const xDir = goRight ? -1 : 1;
+
             el.style.cssText = `
                 position: absolute;
                 top: ${yPos}%;
                 ${goRight ? 'left: -200px' : 'right: -200px'};
                 width: ${60 + Math.random() * 40}px;
-                transform: scaleX(${goRight ? -1 : 1}) scale(${scale});
+                transform: scale(${xDir * scale}, ${scale});
                 opacity: ${0.6 + Math.random() * 0.4};
                 pointer-events: none;
                 z-index: 6;
@@ -342,7 +348,7 @@
         // Spawn vehicles at random intervals
         function scheduleVehicle() {
             spawnVehicle();
-            setTimeout(scheduleVehicle, 500 + Math.random() * 1500); // 0.5s to 2.0s
+            setTimeout(scheduleVehicle, 500 + Math.random() * 1500);
         }
         scheduleVehicle();
     </script>
