@@ -199,6 +199,7 @@ body, html {
 /* Background layer styling */
 .city-back {
     z-index: 1;
+    bottom: -8vh; /* Shift back image slightly downwards */
 }
 
 /* Atmospheric Fog Layer */
