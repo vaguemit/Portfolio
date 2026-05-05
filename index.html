@@ -28,6 +28,69 @@
         </div>
     </header>
 
+    <!-- Cyberpunk Music Player (hangs from navbar) -->
+    <div class="player-mount">
+        <!-- Hanging wires -->
+        <div class="player-wire wire-left"></div>
+        <div class="player-wire wire-right"></div>
+
+        <div class="cp-player" id="cpPlayer">
+            <!-- Top panel screws / details -->
+            <div class="cp-screw cp-screw-tl"></div>
+            <div class="cp-screw cp-screw-tr"></div>
+
+            <!-- Header strip -->
+            <div class="cp-header">
+                <span class="cp-label">// SYS_AUDIO //</span>
+                <span class="cp-status-dot" id="statusDot"></span>
+            </div>
+
+            <!-- Oscilloscope / visualizer -->
+            <div class="cp-screen">
+                <canvas id="vizCanvas" width="220" height="50"></canvas>
+                <div class="cp-screen-overlay"></div>
+            </div>
+
+            <!-- Track info -->
+            <div class="cp-track-info">
+                <div class="cp-track-name" id="trackName">NO SIGNAL</div>
+                <div class="cp-track-artist" id="trackArtist">--- ---</div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="cp-progress-wrap">
+                <span class="cp-time" id="currentTime">0:00</span>
+                <div class="cp-progress-bar" id="progressBar">
+                    <div class="cp-progress-fill" id="progressFill"></div>
+                    <div class="cp-progress-head" id="progressHead"></div>
+                </div>
+                <span class="cp-time" id="totalTime">0:00</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="cp-controls">
+                <button class="cp-btn" id="prevBtn" title="Previous">&#9664;&#9664;</button>
+                <button class="cp-btn cp-btn-play" id="playBtn" title="Play/Pause">
+                    <span id="playIcon">&#9654;</span>
+                </button>
+                <button class="cp-btn" id="nextBtn" title="Next">&#9654;&#9654;</button>
+                <button class="cp-btn cp-btn-vol" id="muteBtn" title="Mute">&#128266;</button>
+                <input type="range" class="cp-volume" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+            </div>
+
+            <!-- Bottom detail strip -->
+            <div class="cp-bottom-strip">
+                <div class="cp-led cp-led-green"></div>
+                <div class="cp-led cp-led-amber"></div>
+                <div class="cp-led cp-led-red"></div>
+                <span class="cp-bottom-text">FREQ-SYNC v2.0</span>
+            </div>
+
+            <div class="cp-screw cp-screw-bl"></div>
+            <div class="cp-screw cp-screw-br"></div>
+        </div>
+    </div>
+
 
     <!-- Layered City Skyline -->
     <div class="city-skyline" id="parallax-container">
@@ -36,28 +99,195 @@
         <img src="city-front.png" alt="City Foreground" class="city-layer city-front" id="parallax-front">
     </div>
 
-    <!-- Mouse Parallax Script -->
+    <!-- Scripts -->
     <script>
+        /* ===== PARALLAX ===== */
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
-            
-            // Calculate offsets (back layer moves opposite to front layer)
-            // Multiplying by pixel values to determine max movement
-            const backOffsetX = -(x - 0.5) * 20; 
+            const backOffsetX = -(x - 0.5) * 20;
             const backOffsetY = -(y - 0.5) * 10;
-            
             const frontOffsetX = (x - 0.5) * 50;
             const frontOffsetY = (y - 0.5) * 25;
-
             const backLayer = document.getElementById('parallax-back');
             const frontLayer = document.getElementById('parallax-front');
-
             if (backLayer && frontLayer) {
-                // Using transform for hardware acceleration
                 backLayer.style.transform = `translate(${backOffsetX}px, ${backOffsetY}px)`;
                 frontLayer.style.transform = `translate(${frontOffsetX}px, ${frontOffsetY}px)`;
             }
+        });
+
+        /* ===== MUSIC PLAYER ===== */
+        // ---- ADD YOUR TRACKS HERE ----
+        const playlist = [
+            // { title: 'Track Name', artist: 'Artist', src: 'music/track1.mp3' },
+        ];
+
+        let currentIndex = 0;
+        let isPlaying = false;
+        const audio = new Audio();
+        audio.volume = 0.7;
+
+        const playBtn    = document.getElementById('playBtn');
+        const playIcon   = document.getElementById('playIcon');
+        const prevBtn    = document.getElementById('prevBtn');
+        const nextBtn    = document.getElementById('nextBtn');
+        const muteBtn    = document.getElementById('muteBtn');
+        const volSlider  = document.getElementById('volumeSlider');
+        const trackName  = document.getElementById('trackName');
+        const trackArtist= document.getElementById('trackArtist');
+        const progressFill = document.getElementById('progressFill');
+        const progressHead = document.getElementById('progressHead');
+        const progressBar  = document.getElementById('progressBar');
+        const currentTimeEl= document.getElementById('currentTime');
+        const totalTimeEl  = document.getElementById('totalTime');
+        const statusDot    = document.getElementById('statusDot');
+
+        function formatTime(s) {
+            if (isNaN(s)) return '0:00';
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60).toString().padStart(2,'0');
+            return `${m}:${sec}`;
+        }
+
+        function loadTrack(index) {
+            if (playlist.length === 0) {
+                trackName.textContent = 'NO SIGNAL';
+                trackArtist.textContent = '--- ---';
+                return;
+            }
+            const t = playlist[index];
+            audio.src = t.src;
+            trackName.textContent = t.title.toUpperCase();
+            trackArtist.textContent = t.artist.toUpperCase();
+            audio.load();
+        }
+
+        function play() {
+            if (playlist.length === 0) return;
+            audio.play();
+            isPlaying = true;
+            playIcon.innerHTML = '&#9646;&#9646;';
+            statusDot.classList.add('active');
+        }
+
+        function pause() {
+            audio.pause();
+            isPlaying = false;
+            playIcon.innerHTML = '&#9654;';
+            statusDot.classList.remove('active');
+        }
+
+        playBtn.addEventListener('click', () => isPlaying ? pause() : play());
+
+        prevBtn.addEventListener('click', () => {
+            if (playlist.length === 0) return;
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentIndex);
+            if (isPlaying) play();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (playlist.length === 0) return;
+            currentIndex = (currentIndex + 1) % playlist.length;
+            loadTrack(currentIndex);
+            if (isPlaying) play();
+        });
+
+        audio.addEventListener('ended', () => {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            loadTrack(currentIndex);
+            play();
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+            progressFill.style.width = pct + '%';
+            progressHead.style.left = pct + '%';
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            totalTimeEl.textContent = formatTime(audio.duration);
+        });
+
+        progressBar.addEventListener('click', (e) => {
+            if (!audio.duration) return;
+            const rect = progressBar.getBoundingClientRect();
+            audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+        });
+
+        volSlider.addEventListener('input', () => {
+            audio.volume = volSlider.value;
+            muteBtn.innerHTML = volSlider.value == 0 ? '&#128263;' : '&#128266;';
+        });
+
+        muteBtn.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            muteBtn.innerHTML = audio.muted ? '&#128263;' : '&#128266;';
+        });
+
+        loadTrack(0);
+
+        /* ===== OSCILLOSCOPE VISUALIZER ===== */
+        const canvas = document.getElementById('vizCanvas');
+        const ctx = canvas.getContext('2d');
+        let analyser, dataArray, source, animId;
+        let vizMode = 'idle'; // 'idle' or 'live'
+
+        function setupAudioContext() {
+            if (source) return;
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+            source = audioCtx.createMediaElementSource(audio);
+            source.connect(analyser);
+            analyser.connect(audioCtx.destination);
+            vizMode = 'live';
+            drawLive();
+        }
+
+        function drawLive() {
+            animId = requestAnimationFrame(drawLive);
+            analyser.getByteTimeDomainData(dataArray);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 1.5;
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 6;
+            const sliceW = canvas.width / dataArray.length;
+            let x = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = (v * canvas.height) / 2;
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                x += sliceW;
+            }
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+        }
+
+        // Idle sine wave when not playing
+        let idleT = 0;
+        function drawIdle() {
+            if (vizMode === 'live') return;
+            requestAnimationFrame(drawIdle);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.strokeStyle = '#00aa55';
+            ctx.lineWidth = 1.5;
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 4;
+            for (let x = 0; x <= canvas.width; x++) {
+                const y = canvas.height / 2 + Math.sin((x * 0.05) + idleT) * 6;
+                x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            idleT += 0.05;
+        }
+        drawIdle();
+
+        playBtn.addEventListener('click', () => {
+            if (playlist.length > 0) setupAudioContext();
         });
     </script>
 </body>
