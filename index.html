@@ -322,16 +322,16 @@
 
             el.innerHTML = `<img src="car.png" alt="flying car" style="width: 100%; height: auto; display: block;" />`;
             
+            // car.png faces left. So if it goes right, we must flip it horizontally (scaleX(-1))
             el.style.cssText = `
                 position: absolute;
                 top: ${yPos}%;
                 ${goRight ? 'left: -200px' : 'right: -200px'};
-                width: ${120 + Math.random() * 80}px;
-                transform: scaleX(${goRight ? 1 : -1}) scale(${scale});
+                width: ${60 + Math.random() * 40}px;
+                transform: scaleX(${goRight ? -1 : 1}) scale(${scale});
                 opacity: ${0.6 + Math.random() * 0.4};
                 pointer-events: none;
                 z-index: 6;
-                filter: drop-shadow(0 0 5px #a855f7);
                 animation: flyAcross ${duration}s linear forwards;
             `;
             if (!goRight) el.style.animationName = 'flyAcrossLeft';
@@ -342,7 +342,7 @@
         // Spawn vehicles at random intervals
         function scheduleVehicle() {
             spawnVehicle();
-            setTimeout(scheduleVehicle, 2000 + Math.random() * 4000);
+            setTimeout(scheduleVehicle, 500 + Math.random() * 1500); // 0.5s to 2.0s
         }
         scheduleVehicle();
     </script>
