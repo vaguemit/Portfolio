@@ -214,6 +214,8 @@ body, html {
     flex-direction: column;
     align-items: center;
     width: 160px;
+    transform: scale(0.75);
+    transform-origin: top center;
 }
 
 /* Hanging wires */

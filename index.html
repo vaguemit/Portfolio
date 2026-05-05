@@ -307,52 +307,31 @@
         /* ===== FLYING VEHICLES ===== */
         const vehiclesLayer = document.getElementById('vehiclesLayer');
 
-        // SVG shapes for small flying vehicles
-        const vehicleShapes = [
-            // Speeder bike shape
-            `<svg viewBox="0 0 40 14" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="0,7 6,2 34,2 40,7 34,12 6,12" fill="#1a0030" stroke="#a855f7" stroke-width="0.8"/>
-                <rect x="10" y="4" width="20" height="6" fill="#2a0050" rx="1"/>
-                <circle cx="32" cy="7" r="2" fill="#ff4444" opacity="0.9"/>
-                <line x1="0" y1="7" x2="8" y2="7" stroke="#00ffff" stroke-width="0.5" opacity="0.7"/>
-            </svg>`,
-            // Heli-drone shape
-            `<svg viewBox="0 0 30 18" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="6" width="14" height="8" rx="2" fill="#0a001a" stroke="#7b2fff" stroke-width="0.8"/>
-                <line x1="0" y1="5" x2="30" y2="5" stroke="#555" stroke-width="1"/>
-                <circle cx="15" cy="10" r="2" fill="#00ff88" opacity="0.8"/>
-                <line x1="13" y1="5" x2="13" y2="0" stroke="#444" stroke-width="0.8"/>
-                <line x1="17" y1="5" x2="17" y2="0" stroke="#444" stroke-width="0.8"/>
-            </svg>`,
-            // Fighter silhouette
-            `<svg viewBox="0 0 50 12" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="0,6 8,1 42,3 50,6 42,9 8,11" fill="#0d001f" stroke="#ff2244" stroke-width="0.6"/>
-                <circle cx="44" cy="6" r="1.5" fill="#ff4444"/>
-                <line x1="0" y1="6" x2="10" y2="6" stroke="#ff6666" stroke-width="0.5" opacity="0.6"/>
-            </svg>`
-        ];
+        // Removed SVG shapes, using car.png image
 
         function spawnVehicle() {
             const el = document.createElement('div');
             el.className = 'vehicle';
 
             const goRight = Math.random() > 0.5;
-            const yPos = 8 + Math.random() * 35; // top 40% of screen
-            const scale = 0.4 + Math.random() * 0.5; // small
-            const duration = 12 + Math.random() * 18; // 12-30s
-            const shape = vehicleShapes[Math.floor(Math.random() * vehicleShapes.length)];
+            // Spawn height slightly lower than center (50%). Range: 55% to 80%
+            const yPos = 55 + Math.random() * 25; 
+            
+            const scale = 0.4 + Math.random() * 0.4; // varied scale for depth
+            const duration = 15 + Math.random() * 25; // 15-40s
 
-            el.innerHTML = shape;
+            el.innerHTML = `<img src="car.png" alt="flying car" style="width: 100%; height: auto; display: block;" />`;
+            
             el.style.cssText = `
                 position: absolute;
                 top: ${yPos}%;
-                ${goRight ? 'left: -80px' : 'right: -80px'};
-                width: ${30 + Math.random() * 20}px;
+                ${goRight ? 'left: -200px' : 'right: -200px'};
+                width: ${120 + Math.random() * 80}px;
                 transform: scaleX(${goRight ? 1 : -1}) scale(${scale});
-                opacity: ${0.5 + Math.random() * 0.5};
+                opacity: ${0.6 + Math.random() * 0.4};
                 pointer-events: none;
                 z-index: 6;
-                filter: drop-shadow(0 0 3px #a855f7);
+                filter: drop-shadow(0 0 5px #a855f7);
                 animation: flyAcross ${duration}s linear forwards;
             `;
             if (!goRight) el.style.animationName = 'flyAcrossLeft';
