@@ -37,10 +37,36 @@
     </main>
 
     <!-- Layered City Skyline -->
-    <div class="city-skyline">
+    <div class="city-skyline" id="parallax-container">
         <!-- Save your uploaded images as city-back.png and city-front.png in this folder! -->
-        <img src="city-back.png" alt="City Background" class="city-layer city-back">
-        <img src="city-front.png" alt="City Foreground" class="city-layer city-front">
+        <img src="city-back.png" alt="City Background" class="city-layer city-back" id="parallax-back">
+        <div class="city-fog"></div>
+        <img src="city-front.png" alt="City Foreground" class="city-layer city-front" id="parallax-front">
     </div>
+
+    <!-- Mouse Parallax Script -->
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // Calculate offsets (shifting in the opposite direction of mouse or same direction)
+            // Multiplying by pixel values to determine max movement
+            const backOffsetX = (x - 0.5) * 20; 
+            const backOffsetY = (y - 0.5) * 10;
+            
+            const frontOffsetX = (x - 0.5) * 50;
+            const frontOffsetY = (y - 0.5) * 25;
+
+            const backLayer = document.getElementById('parallax-back');
+            const frontLayer = document.getElementById('parallax-front');
+
+            if (backLayer && frontLayer) {
+                // Using transform for hardware acceleration
+                backLayer.style.transform = `translate(${backOffsetX}px, ${backOffsetY}px)`;
+                frontLayer.style.transform = `translate(${frontOffsetX}px, ${frontOffsetY}px)`;
+            }
+        });
+    </script>
 </body>
 </html>
