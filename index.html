@@ -15,6 +15,9 @@
     <!-- Sky background gradient -->
     <div class="background-sky"></div>
     
+    <!-- Digital Rain Canvas -->
+    <canvas id="rainCanvas" class="rain-layer"></canvas>
+    
     <!-- Top Navigation Bar (Angled) -->
     <header class="top-nav-container">
         <div class="top-nav-shape">
@@ -96,6 +99,15 @@
         </div>
     </div>
 
+    <!-- Terminal Hero Section -->
+    <div class="hero-terminal">
+        <div class="terminal-header">
+            <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+            <span class="term-title">SYS.TERM // v4.0</span>
+        </div>
+        <div class="terminal-body" id="termBody"></div>
+    </div>
+
 
     <!-- Layered City Skyline -->
     <div class="city-skyline" id="parallax-container">
@@ -109,6 +121,83 @@
 
     <!-- Scripts -->
     <script>
+        /* ===== DIGITAL RAIN ===== */
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~'.split('');
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+        let drops = [];
+        for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
+
+        function drawRain() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(168, 85, 247, 0.6)'; // Purple rain, slightly transparent
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawRain, 33);
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = canvas.width / fontSize;
+            drops = [];
+            for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
+        });
+
+        /* ===== TERMINAL TYPING ===== */
+        const termLines = [
+            "> INITIALIZING SECURE CONNECTION...",
+            "> ACCESS GRANTED.",
+            "> WELCOME TO THE GRID, MIT.",
+            "> ROLE: SOFTWARE DEVELOPER",
+            "> STATUS: ONLINE",
+            "> WAITING FOR COMMAND..."
+        ];
+        const termBody = document.getElementById('termBody');
+        let lineIdx = 0;
+        let charIdx = 0;
+        let currentLineEl = null;
+
+        function typeTerminal() {
+            if (lineIdx >= termLines.length) {
+                const cursor = document.createElement('span');
+                cursor.className = 'term-cursor';
+                termBody.appendChild(cursor);
+                return;
+            }
+
+            if (charIdx === 0) {
+                currentLineEl = document.createElement('div');
+                termBody.appendChild(currentLineEl);
+            }
+
+            currentLineEl.textContent = termLines[lineIdx].substring(0, charIdx + 1);
+            charIdx++;
+
+            if (charIdx >= termLines[lineIdx].length) {
+                charIdx = 0;
+                lineIdx++;
+                setTimeout(typeTerminal, 400); // pause at end of line
+            } else {
+                setTimeout(typeTerminal, 20 + Math.random() * 50); // typing speed
+            }
+        }
+        setTimeout(typeTerminal, 1000);
+
         /* ===== PARALLAX ===== */
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX / window.innerWidth;
