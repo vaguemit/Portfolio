@@ -39,7 +39,7 @@
     <!-- Layered City Skyline -->
     <div class="city-skyline" id="parallax-container">
         <!-- Save your uploaded images as city-back.png and city-front.png in this folder! -->
-        <img src="city-back.png" alt="City Background" class="city-layer city-back" id="parallax-back">
+        <img src="city-front.png" alt="City Background" class="city-layer city-back" id="parallax-back">
         <div class="city-fog"></div>
         <img src="city-front.png" alt="City Foreground" class="city-layer city-front" id="parallax-front">
     </div>
@@ -50,10 +50,10 @@
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
             
-            // Calculate offsets (shifting in the opposite direction of mouse or same direction)
+            // Calculate offsets (back layer moves opposite to front layer)
             // Multiplying by pixel values to determine max movement
-            const backOffsetX = (x - 0.5) * 20; 
-            const backOffsetY = (y - 0.5) * 10;
+            const backOffsetX = -(x - 0.5) * 20; 
+            const backOffsetY = -(y - 0.5) * 10;
             
             const frontOffsetX = (x - 0.5) * 50;
             const frontOffsetY = (y - 0.5) * 25;
@@ -62,8 +62,8 @@
             const frontLayer = document.getElementById('parallax-front');
 
             if (backLayer && frontLayer) {
-                // Using transform for hardware acceleration
-                backLayer.style.transform = `translate(${backOffsetX}px, ${backOffsetY}px)`;
+                // Using transform for hardware acceleration, and flipping the back layer horizontally
+                backLayer.style.transform = `translate(${backOffsetX}px, ${backOffsetY}px) scaleX(-1)`;
                 frontLayer.style.transform = `translate(${frontOffsetX}px, ${frontOffsetY}px)`;
             }
         });
