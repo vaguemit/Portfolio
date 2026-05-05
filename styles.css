@@ -41,14 +41,14 @@ body, html {
     z-index: 10;
 }
 
-/* The dark brown/reddish angled shape at the top */
+/* The dark angled shape at the top */
 .top-nav-shape {
     position: absolute;
     top: -60px;
     left: -5%;
     width: 110%;
     height: 160px;
-    background-color: #3b2826; 
+    background-color: #30005A; /* Dark Purple */
     transform: rotate(-3deg);
     display: flex;
     justify-content: flex-start;
