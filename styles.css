@@ -174,7 +174,7 @@ body, html {
 /* --- Skyline Layers --- */
 .city-skyline {
     position: absolute;
-    bottom: -5vh; /* Offset to hide bottom edge during parallax */
+    bottom: -15vh; /* Shifted further downwards as requested */
     left: -2vw; /* Expand width so shifting doesn't reveal hard edges */
     width: 104vw; 
     height: 45vh;
