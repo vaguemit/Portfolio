@@ -1,0 +1,247 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling for the landing screen */
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+/* Background Gradient (Sunset Sky) */
+.background-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient matching the dusk/sunset vibe */
+    background: linear-gradient(180deg, 
+        #3e3553 0%, 
+        #654a61 25%, 
+        #9d6773 50%, 
+        #c88b85 75%, 
+        #e1b6a7 100%);
+    z-index: -2;
+}
+
+/* --- Top Navigation --- */
+.top-nav-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 10;
+}
+
+/* The dark brown/reddish angled shape at the top */
+.top-nav-shape {
+    position: absolute;
+    top: -60px;
+    left: -5%;
+    width: 110%;
+    height: 160px;
+    background-color: #3b2826; 
+    transform: rotate(-3deg);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-bottom: 25px;
+    padding-left: 15%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Container for the buttons */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transform: rotate(3deg); /* Bring the text mostly straight relative to the angled background */
+}
+
+/* Navigation Buttons */
+.nav-btn {
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    padding: 8px 24px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 3px solid #111;
+    transition: all 0.2s ease;
+    /* Box shadow to simulate thickness */
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.9);
+}
+
+.nav-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.9);
+}
+
+/* Little dotted lines between nav items */
+.nav-separator {
+    width: 40px;
+    height: 2px;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.6),
+        rgba(255,255,255,0.6) 4px,
+        transparent 4px,
+        transparent 8px
+    );
+    position: relative;
+}
+.nav-separator::before, .nav-separator::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 50%;
+}
+.nav-separator::before { left: -4px; }
+.nav-separator::after { right: -4px; }
+
+/* --- Hero Section --- */
+.hero-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none; /* Let clicks pass through */
+}
+
+/* Slanted text container */
+.hero-content {
+    text-align: center;
+    transform: rotate(-3deg);
+    margin-top: -5vh; /* Push up slightly to make room for skyline */
+}
+
+/* Main Name styling */
+.hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18vw; /* Extremely large and responsive text */
+    font-weight: 700;
+    font-style: italic; /* Mimics the skew in the image */
+    color: #ffffff;
+    margin: 0;
+    line-height: 0.9;
+    letter-spacing: 0.5vw;
+    text-transform: uppercase;
+    
+    /* Solid red 3D shadow + drop shadow */
+    text-shadow: 
+        2px 2px 0 #e84c55,
+        4px 4px 0 #e84c55,
+        6px 6px 0 #e84c55,
+        8px 8px 0 #e84c55,
+        10px 10px 0 #e84c55,
+        12px 12px 0 #e84c55,
+        14px 14px 0 #e84c55,
+        16px 16px 0 #e84c55,
+        18px 18px 0 #e84c55,
+        25px 25px 15px rgba(0,0,0,0.5);
+}
+
+/* Subtitle styling */
+.hero-subtitle {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.8vw;
+    color: #ffffff; 
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 6px;
+    margin-top: 15px;
+    text-transform: uppercase;
+    
+    /* Smaller 3D effect */
+    text-shadow: 
+        1px 1px 0 #e84c55,
+        2px 2px 0 #e84c55,
+        3px 3px 0 #e84c55,
+        6px 6px 8px rgba(0,0,0,0.5);
+}
+
+/* --- Skyline Layers --- */
+.city-skyline {
+    position: absolute;
+    bottom: -2vh; /* Slight offset to hide bottom edge during animation */
+    left: 0;
+    width: 100%;
+    height: 45vh;
+    z-index: 8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none; /* Immovable / uninteractable */
+}
+
+/* Base styles for both layers */
+.city-layer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    object-position: bottom;
+    will-change: transform;
+}
+
+/* Background layer styling & animation */
+.city-back {
+    z-index: 1;
+    opacity: 0.7;
+    filter: blur(2px) brightness(0.6); /* Creates depth of field */
+    animation: floatBack 8s ease-in-out infinite;
+}
+
+/* Foreground layer styling & animation */
+.city-front {
+    z-index: 2;
+    filter: drop-shadow(0 -5px 15px rgba(255,0,255,0.2));
+    animation: floatFront 5s ease-in-out infinite;
+}
+
+/* Floating Animations */
+@keyframes floatFront {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes floatBack {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 25vw;
+    }
+    .hero-subtitle {
+        font-size: 3vw;
+        letter-spacing: 3px;
+    }
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    .nav-separator {
+        width: 20px;
+    }
+}
