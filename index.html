@@ -28,36 +28,33 @@
         </div>
     </header>
 
-    <!-- Cyberpunk Music Player (hangs from navbar) -->
+    <!-- Cyberpunk Music Player (iPod style, hangs from navbar) -->
     <div class="player-mount">
-        <!-- Hanging wires -->
         <div class="player-wire wire-left"></div>
         <div class="player-wire wire-right"></div>
 
         <div class="cp-player" id="cpPlayer">
-            <!-- Top panel screws / details -->
+            <!-- Screws -->
             <div class="cp-screw cp-screw-tl"></div>
             <div class="cp-screw cp-screw-tr"></div>
 
-            <!-- Header strip -->
+            <!-- Header -->
             <div class="cp-header">
                 <span class="cp-label">// SYS_AUDIO //</span>
                 <span class="cp-status-dot" id="statusDot"></span>
             </div>
 
-            <!-- Oscilloscope / visualizer -->
+            <!-- Screen: oscilloscope + track info -->
             <div class="cp-screen">
-                <canvas id="vizCanvas" width="220" height="50"></canvas>
+                <canvas id="vizCanvas" width="180" height="80"></canvas>
                 <div class="cp-screen-overlay"></div>
+                <div class="cp-screen-info">
+                    <div class="cp-track-name" id="trackName">NO SIGNAL</div>
+                    <div class="cp-track-artist" id="trackArtist">--- ---</div>
+                </div>
             </div>
 
-            <!-- Track info -->
-            <div class="cp-track-info">
-                <div class="cp-track-name" id="trackName">NO SIGNAL</div>
-                <div class="cp-track-artist" id="trackArtist">--- ---</div>
-            </div>
-
-            <!-- Progress bar -->
+            <!-- Progress -->
             <div class="cp-progress-wrap">
                 <span class="cp-time" id="currentTime">0:00</span>
                 <div class="cp-progress-bar" id="progressBar">
@@ -67,23 +64,31 @@
                 <span class="cp-time" id="totalTime">0:00</span>
             </div>
 
-            <!-- Controls -->
-            <div class="cp-controls">
-                <button class="cp-btn" id="prevBtn" title="Previous">&#9664;&#9664;</button>
-                <button class="cp-btn cp-btn-play" id="playBtn" title="Play/Pause">
-                    <span id="playIcon">&#9654;</span>
-                </button>
-                <button class="cp-btn" id="nextBtn" title="Next">&#9654;&#9654;</button>
-                <button class="cp-btn cp-btn-vol" id="muteBtn" title="Mute">&#128266;</button>
-                <input type="range" class="cp-volume" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+            <!-- iPod Click Wheel Area -->
+            <div class="cp-wheel-wrap">
+                <div class="cp-wheel">
+                    <!-- Top: Prev -->
+                    <button class="cp-wheel-btn cp-wheel-top" id="prevBtn" title="Previous">&#9664;&#9664;</button>
+                    <!-- Bottom: Next -->
+                    <button class="cp-wheel-btn cp-wheel-bottom" id="nextBtn" title="Next">&#9654;&#9654;</button>
+                    <!-- Left: Vol Down -->
+                    <button class="cp-wheel-btn cp-wheel-left" id="volDnBtn" title="Vol -">&#8722;</button>
+                    <!-- Right: Vol Up -->
+                    <button class="cp-wheel-btn cp-wheel-right" id="volUpBtn" title="Vol +">&#43;</button>
+                    <!-- Center: Play -->
+                    <button class="cp-wheel-center" id="playBtn" title="Play/Pause">
+                        <span id="playIcon">&#9654;</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- Bottom detail strip -->
+            <!-- LED strip -->
             <div class="cp-bottom-strip">
                 <div class="cp-led cp-led-green"></div>
                 <div class="cp-led cp-led-amber"></div>
                 <div class="cp-led cp-led-red"></div>
                 <span class="cp-bottom-text">FREQ-SYNC v2.0</span>
+                <button class="cp-btn cp-btn-vol" id="muteBtn" title="Mute">&#128266;</button>
             </div>
 
             <div class="cp-screw cp-screw-bl"></div>
@@ -98,6 +103,9 @@
         <img src="city-back.png" alt="City Background" class="city-layer city-back" id="parallax-back">
         <img src="city-front.png" alt="City Foreground" class="city-layer city-front" id="parallax-front">
     </div>
+
+    <!-- Flying Vehicles -->
+    <div class="vehicles-layer" id="vehiclesLayer"></div>
 
     <!-- Scripts -->
     <script>
@@ -133,7 +141,8 @@
         const prevBtn    = document.getElementById('prevBtn');
         const nextBtn    = document.getElementById('nextBtn');
         const muteBtn    = document.getElementById('muteBtn');
-        const volSlider  = document.getElementById('volumeSlider');
+        const volDnBtn   = document.getElementById('volDnBtn');
+        const volUpBtn   = document.getElementById('volUpBtn');
         const trackName  = document.getElementById('trackName');
         const trackArtist= document.getElementById('trackArtist');
         const progressFill = document.getElementById('progressFill');
@@ -214,9 +223,14 @@
             audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
         });
 
-        volSlider.addEventListener('input', () => {
-            audio.volume = volSlider.value;
-            muteBtn.innerHTML = volSlider.value == 0 ? '&#128263;' : '&#128266;';
+        volDnBtn.addEventListener('click', () => {
+            audio.volume = Math.max(0, audio.volume - 0.1);
+            muteBtn.innerHTML = audio.volume === 0 ? '&#128263;' : '&#128266;';
+        });
+
+        volUpBtn.addEventListener('click', () => {
+            audio.volume = Math.min(1, audio.volume + 0.1);
+            muteBtn.innerHTML = '&#128266;';
         });
 
         muteBtn.addEventListener('click', () => {
@@ -289,6 +303,69 @@
         playBtn.addEventListener('click', () => {
             if (playlist.length > 0) setupAudioContext();
         });
+
+        /* ===== FLYING VEHICLES ===== */
+        const vehiclesLayer = document.getElementById('vehiclesLayer');
+
+        // SVG shapes for small flying vehicles
+        const vehicleShapes = [
+            // Speeder bike shape
+            `<svg viewBox="0 0 40 14" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="0,7 6,2 34,2 40,7 34,12 6,12" fill="#1a0030" stroke="#a855f7" stroke-width="0.8"/>
+                <rect x="10" y="4" width="20" height="6" fill="#2a0050" rx="1"/>
+                <circle cx="32" cy="7" r="2" fill="#ff4444" opacity="0.9"/>
+                <line x1="0" y1="7" x2="8" y2="7" stroke="#00ffff" stroke-width="0.5" opacity="0.7"/>
+            </svg>`,
+            // Heli-drone shape
+            `<svg viewBox="0 0 30 18" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="6" width="14" height="8" rx="2" fill="#0a001a" stroke="#7b2fff" stroke-width="0.8"/>
+                <line x1="0" y1="5" x2="30" y2="5" stroke="#555" stroke-width="1"/>
+                <circle cx="15" cy="10" r="2" fill="#00ff88" opacity="0.8"/>
+                <line x1="13" y1="5" x2="13" y2="0" stroke="#444" stroke-width="0.8"/>
+                <line x1="17" y1="5" x2="17" y2="0" stroke="#444" stroke-width="0.8"/>
+            </svg>`,
+            // Fighter silhouette
+            `<svg viewBox="0 0 50 12" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="0,6 8,1 42,3 50,6 42,9 8,11" fill="#0d001f" stroke="#ff2244" stroke-width="0.6"/>
+                <circle cx="44" cy="6" r="1.5" fill="#ff4444"/>
+                <line x1="0" y1="6" x2="10" y2="6" stroke="#ff6666" stroke-width="0.5" opacity="0.6"/>
+            </svg>`
+        ];
+
+        function spawnVehicle() {
+            const el = document.createElement('div');
+            el.className = 'vehicle';
+
+            const goRight = Math.random() > 0.5;
+            const yPos = 8 + Math.random() * 35; // top 40% of screen
+            const scale = 0.4 + Math.random() * 0.5; // small
+            const duration = 12 + Math.random() * 18; // 12-30s
+            const shape = vehicleShapes[Math.floor(Math.random() * vehicleShapes.length)];
+
+            el.innerHTML = shape;
+            el.style.cssText = `
+                position: absolute;
+                top: ${yPos}%;
+                ${goRight ? 'left: -80px' : 'right: -80px'};
+                width: ${30 + Math.random() * 20}px;
+                transform: scaleX(${goRight ? 1 : -1}) scale(${scale});
+                opacity: ${0.5 + Math.random() * 0.5};
+                pointer-events: none;
+                z-index: 6;
+                filter: drop-shadow(0 0 3px #a855f7);
+                animation: flyAcross ${duration}s linear forwards;
+            `;
+            if (!goRight) el.style.animationName = 'flyAcrossLeft';
+            vehiclesLayer.appendChild(el);
+            setTimeout(() => el.remove(), duration * 1000 + 500);
+        }
+
+        // Spawn vehicles at random intervals
+        function scheduleVehicle() {
+            spawnVehicle();
+            setTimeout(scheduleVehicle, 2000 + Math.random() * 4000);
+        }
+        scheduleVehicle();
     </script>
 </body>
 </html>

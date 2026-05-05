@@ -19,16 +19,22 @@ body, html {
     font-family: 'Nemesys', sans-serif;
 }
 
-/* Background Gradient (Sunset Sky) */
+/* Background — Cyberpunk Sky */
 .background-sky {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Solid Black Background */
-    background: #000000;
+    background: url('sky-bg.png') center center / cover no-repeat;
     z-index: -2;
+}
+/* Dark overlay so the navbar and buildings stay readable */
+.background-sky::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
 }
 
 /* --- Top Navigation --- */
@@ -198,49 +204,50 @@ body, html {
    CYBERPUNK MUSIC PLAYER
 ============================== */
 
-/* Mount: positions the player hanging below the navbar */
+/* Mount: positions the iPod player hanging below the navbar */
 .player-mount {
     position: absolute;
-    top: 62px;
-    right: 80px;
+    top: 58px;
+    right: 60px;
     z-index: 20;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 260px;
+    width: 160px;
 }
 
 /* Hanging wires */
 .player-wire {
     width: 2px;
-    height: 18px;
+    height: 20px;
     background: linear-gradient(to bottom, #9b59b6, #4a0e6e);
     box-shadow: 0 0 4px #a855f7;
 }
-.wire-left  { align-self: flex-start; margin-left: 24px; }
-.wire-right { align-self: flex-end;   margin-right: 24px; margin-top: -18px; }
+.wire-left  { align-self: flex-start; margin-left: 28px; }
+.wire-right { align-self: flex-end;   margin-right: 28px; margin-top: -20px; }
 
-/* Main player body */
+/* iPod body — portrait, slim */
 .cp-player {
     position: relative;
-    width: 260px;
-    background: linear-gradient(160deg, #0d0d1a 0%, #1a0a2e 60%, #0a0a14 100%);
+    width: 160px;
+    background: linear-gradient(170deg, #111122 0%, #1a0a2e 50%, #0a0a18 100%);
     border: 1px solid #3a1a5e;
     border-top: 2px solid #7b2fff;
-    border-radius: 4px;
-    padding: 10px 12px 10px;
+    border-radius: 20px 20px 24px 24px; /* rounded top+bottom like iPod */
+    padding: 10px 10px 14px;
     box-shadow:
-        0 0 0 1px #1a0a2e,
-        0 0 20px rgba(123, 47, 255, 0.3),
-        inset 0 1px 0 rgba(255,255,255,0.05);
+        0 0 0 1px #0a001a,
+        0 0 24px rgba(123, 47, 255, 0.35),
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        inset 0 -1px 0 rgba(0,0,0,0.5);
     font-family: 'Nemesys', 'Chakra Petch', monospace;
 }
 
 /* Corner screws */
 .cp-screw {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 35%, #555, #111);
     border: 1px solid #444;
@@ -251,32 +258,31 @@ body, html {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%,-50%) rotate(45deg);
-    width: 4px; height: 1px;
+    width: 3px; height: 1px;
     background: #333;
     box-shadow: 0 0 0 0.5px #333, 0 2px 0 0.5px #333, 0 -2px 0 0.5px #333;
 }
-.cp-screw-tl { top: 5px;  left: 5px; }
-.cp-screw-tr { top: 5px;  right: 5px; }
-.cp-screw-bl { bottom: 5px; left: 5px; }
-.cp-screw-br { bottom: 5px; right: 5px; }
+.cp-screw-tl { top: 8px;  left: 8px; }
+.cp-screw-tr { top: 8px;  right: 8px; }
+.cp-screw-bl { bottom: 10px; left: 8px; }
+.cp-screw-br { bottom: 10px; right: 8px; }
 
 /* Header strip */
 .cp-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
-    padding: 0 8px;
+    margin-bottom: 6px;
+    padding: 0 6px;
 }
 .cp-label {
-    font-size: 0.55rem;
+    font-size: 0.45rem;
     color: #a855f7;
     letter-spacing: 2px;
     text-shadow: 0 0 8px #a855f7;
 }
 .cp-status-dot {
-    width: 6px;
-    height: 6px;
+    width: 5px; height: 5px;
     border-radius: 50%;
     background: #333;
     border: 1px solid #555;
@@ -292,76 +298,76 @@ body, html {
     50% { opacity: 0.4; }
 }
 
-/* Oscilloscope screen */
+/* Screen — taller, like iPod display */
 .cp-screen {
     position: relative;
     width: 100%;
-    height: 56px;
+    height: 90px;
     background: #000d08;
     border: 1px solid #0d3320;
-    border-radius: 2px;
+    border-radius: 4px;
     overflow: hidden;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     box-shadow: inset 0 0 12px rgba(0,255,100,0.08);
 }
 .cp-screen canvas {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 55px;
 }
-/* CRT scanline overlay */
+/* CRT scanlines */
 .cp-screen-overlay {
     position: absolute;
     inset: 0;
     background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.15) 2px,
-        rgba(0,0,0,0.15) 4px
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px
     );
     pointer-events: none;
+    z-index: 2;
 }
-
-/* Track info */
-.cp-track-info {
-    text-align: center;
-    margin-bottom: 8px;
-    overflow: hidden;
+/* Track info below waveform inside screen */
+.cp-screen-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.6);
+    padding: 3px 6px;
+    z-index: 3;
 }
 .cp-track-name {
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     color: #00ff88;
-    letter-spacing: 2px;
-    text-shadow: 0 0 8px #00ff88;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 6px #00ff88;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .cp-track-artist {
-    font-size: 0.5rem;
+    font-size: 0.42rem;
     color: #a855f7;
-    letter-spacing: 3px;
-    margin-top: 2px;
+    letter-spacing: 2px;
+    margin-top: 1px;
 }
 
 /* Progress bar */
 .cp-progress-wrap {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     margin-bottom: 10px;
+    padding: 0 2px;
 }
 .cp-time {
-    font-size: 0.45rem;
-    color: #666;
-    letter-spacing: 1px;
-    min-width: 22px;
+    font-size: 0.38rem;
+    color: #555;
+    letter-spacing: 0.5px;
+    min-width: 18px;
 }
 .cp-progress-bar {
     position: relative;
     flex: 1;
-    height: 3px;
+    height: 2px;
     background: #1a1a2e;
     border: 1px solid #2a1a4e;
     cursor: pointer;
@@ -371,126 +377,139 @@ body, html {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, #7b2fff, #a855f7);
-    box-shadow: 0 0 6px #a855f7;
+    box-shadow: 0 0 5px #a855f7;
     border-radius: 1px;
     transition: width 0.1s linear;
 }
 .cp-progress-head {
     position: absolute;
-    top: 50%;
-    left: 0%;
+    top: 50%; left: 0%;
     transform: translate(-50%, -50%);
-    width: 7px;
-    height: 7px;
+    width: 6px; height: 6px;
     background: #fff;
     border-radius: 50%;
-    box-shadow: 0 0 6px #a855f7;
+    box-shadow: 0 0 5px #a855f7;
     transition: left 0.1s linear;
 }
 
-/* Controls */
-.cp-controls {
+/* ===== iPod Click Wheel ===== */
+.cp-wheel-wrap {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 6px;
     margin-bottom: 10px;
 }
-.cp-btn {
-    background: linear-gradient(180deg, #1a0a2e, #0d0520);
-    border: 1px solid #3a1a5e;
-    color: #a855f7;
-    font-size: 0.6rem;
-    padding: 5px 8px;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s ease;
-    box-shadow: 0 2px 0 #0a0312;
-    line-height: 1;
-}
-.cp-btn:hover {
-    border-color: #a855f7;
-    color: #fff;
-    box-shadow: 0 0 8px rgba(168,85,247,0.5), 0 2px 0 #0a0312;
-}
-.cp-btn:active {
-    transform: translateY(1px);
-    box-shadow: none;
-}
-.cp-btn-play {
-    background: linear-gradient(180deg, #3a0a6e, #1a0a40);
-    border-color: #7b2fff;
-    color: #fff;
-    padding: 6px 12px;
-    font-size: 0.7rem;
-    box-shadow: 0 0 10px rgba(123,47,255,0.4), 0 2px 0 #0a0312;
-}
-.cp-btn-play:hover {
-    background: linear-gradient(180deg, #5a1aaa, #2a0a60);
-    box-shadow: 0 0 16px rgba(123,47,255,0.7), 0 2px 0 #0a0312;
-}
-.cp-btn-vol {
-    font-size: 0.7rem;
-    padding: 5px 6px;
-}
-
-/* Volume slider */
-.cp-volume {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 55px;
-    height: 3px;
-    background: #1a1a2e;
-    border: 1px solid #2a1a4e;
-    border-radius: 1px;
-    cursor: pointer;
-    outline: none;
-}
-.cp-volume::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 9px;
-    height: 9px;
+.cp-wheel {
+    position: relative;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    background: #a855f7;
-    box-shadow: 0 0 5px #a855f7;
-    cursor: pointer;
+    background: radial-gradient(circle at 40% 35%, #2a1050, #0d0020);
+    border: 2px solid #3a1a5e;
+    box-shadow:
+        0 0 0 1px #1a0a2e,
+        0 0 14px rgba(123,47,255,0.4),
+        inset 0 2px 4px rgba(255,255,255,0.05);
 }
+/* Wheel buttons — positioned at compass points */
+.cp-wheel-btn {
+    position: absolute;
+    background: transparent;
+    border: none;
+    color: #a855f7;
+    font-size: 0.55rem;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.15s;
+    line-height: 1;
+    font-family: inherit;
+}
+.cp-wheel-btn:hover { color: #fff; text-shadow: 0 0 6px #a855f7; }
+.cp-wheel-top    { top: 6px;  left: 50%; transform: translateX(-50%); }
+.cp-wheel-bottom { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.cp-wheel-left   { left: 6px;  top: 50%; transform: translateY(-50%); }
+.cp-wheel-right  { right: 6px; top: 50%; transform: translateY(-50%); }
+
+/* Center play button */
+.cp-wheel-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #3a1a60, #1a0a30);
+    border: 1.5px solid #7b2fff;
+    color: #fff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 10px rgba(123,47,255,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.15s ease;
+}
+.cp-wheel-center:hover {
+    background: radial-gradient(circle at 40% 35%, #5a2a90, #2a0a50);
+    box-shadow: 0 0 18px rgba(123,47,255,0.8);
+}
+.cp-wheel-center:active { transform: translate(-50%,-50%) scale(0.95); }
 
 /* Bottom LED strip */
+.cp-btn {
+    background: transparent;
+    border: none;
+    color: #a855f7;
+    font-size: 0.7rem;
+    cursor: pointer;
+    padding: 2px 4px;
+    transition: color 0.15s;
+}
+.cp-btn:hover { color: #fff; }
 .cp-bottom-strip {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 0 4px;
+    gap: 4px;
+    padding: 5px 6px 0;
     border-top: 1px solid #1a0a2e;
-    padding-top: 6px;
 }
 .cp-led {
-    width: 5px;
-    height: 5px;
+    width: 4px; height: 4px;
     border-radius: 50%;
     animation: ledBlink 2s ease-in-out infinite;
 }
-.cp-led-green { background: #00ff88; box-shadow: 0 0 5px #00ff88; }
-.cp-led-amber { background: #ffaa00; box-shadow: 0 0 5px #ffaa00; animation-delay: 0.6s; }
-.cp-led-red   { background: #ff2244; box-shadow: 0 0 5px #ff2244; animation-delay: 1.2s; }
+.cp-led-green { background: #00ff88; box-shadow: 0 0 4px #00ff88; }
+.cp-led-amber { background: #ffaa00; box-shadow: 0 0 4px #ffaa00; animation-delay: 0.6s; }
+.cp-led-red   { background: #ff2244; box-shadow: 0 0 4px #ff2244; animation-delay: 1.2s; }
 @keyframes ledBlink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    50% { opacity: 0.25; }
 }
 .cp-bottom-text {
-    margin-left: auto;
-    font-size: 0.4rem;
-    color: #3a1a5e;
+    font-size: 0.35rem;
+    color: #2a1a3e;
     letter-spacing: 1px;
+    flex: 1;
+    text-align: center;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .player-mount {
-        right: 10px;
-        width: 200px;
-    }
-    .cp-player { width: 200px; }
-    .cp-screen canvas { width: 100%; }
+/* ===== Flying Vehicles Layer ===== */
+.vehicles-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 7;
+    overflow: hidden;
 }
+@keyframes flyAcross {
+    from { transform: translateX(-120px) scaleX(1); }
+    to   { transform: translateX(calc(100vw + 120px)) scaleX(1); }
+}
+@keyframes flyAcrossLeft {
+    from { transform: translateX(120px) scaleX(-1); }
+    to   { transform: translateX(calc(-100vw - 120px)) scaleX(-1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .player-mount { right: 10px; }
+}
+
+
+
