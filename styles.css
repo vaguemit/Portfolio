@@ -169,7 +169,6 @@ body, html {
     left: 0;
     width: 100%;
     height: 45vh;
-    z-index: 8;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -189,13 +188,13 @@ body, html {
 
 /* Background layer styling */
 .city-back {
-    z-index: 1;
+    z-index: 5;
     bottom: -8vh; /* Shift back image slightly downwards */
 }
 
 /* Foreground layer styling */
 .city-front {
-    z-index: 2;
+    z-index: 7;
     width: 105%;
     left: -2.5%;
 }
@@ -496,7 +495,7 @@ body, html {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 7;
+    z-index: 6; /* Between city-back (5) and city-front (7) */
     overflow: hidden;
 }
 @keyframes flyAcross {
