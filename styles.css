@@ -175,8 +175,8 @@ body, html {
 .city-skyline {
     position: absolute;
     bottom: -15vh; /* Shifted further downwards as requested */
-    left: -2vw; /* Expand width so shifting doesn't reveal hard edges */
-    width: 104vw; 
+    left: 0;
+    width: 100%;
     height: 45vh;
     z-index: 8;
     display: flex;
