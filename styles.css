@@ -5,11 +5,18 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Nemesys';
+    src: url('NEMESYS.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body, html {
     width: 100%;
     height: 100%;
     overflow: hidden; /* Prevent scrolling for the landing screen */
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Nemesys', sans-serif;
 }
 
 /* Background Gradient (Sunset Sky) */
@@ -128,47 +135,25 @@ body, html {
 
 /* Main Name styling */
 .hero-title {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Nemesys', sans-serif;
     font-size: 18vw; /* Extremely large and responsive text */
-    font-weight: 700;
-    font-style: italic; /* Mimics the skew in the image */
-    color: #ffffff;
+    font-weight: normal;
+    color: #FCEE0A; /* Cyberpunk Yellow */
     margin: 0;
     line-height: 0.9;
     letter-spacing: 0.5vw;
     text-transform: uppercase;
-    
-    /* Solid red 3D shadow + drop shadow */
-    text-shadow: 
-        2px 2px 0 #e84c55,
-        4px 4px 0 #e84c55,
-        6px 6px 0 #e84c55,
-        8px 8px 0 #e84c55,
-        10px 10px 0 #e84c55,
-        12px 12px 0 #e84c55,
-        14px 14px 0 #e84c55,
-        16px 16px 0 #e84c55,
-        18px 18px 0 #e84c55,
-        25px 25px 15px rgba(0,0,0,0.5);
 }
 
 /* Subtitle styling */
 .hero-subtitle {
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Nemesys', sans-serif;
     font-size: 1.8vw;
-    color: #ffffff; 
-    font-style: italic;
-    font-weight: 500;
+    color: #FCEE0A; 
+    font-weight: normal;
     letter-spacing: 6px;
     margin-top: 15px;
     text-transform: uppercase;
-    
-    /* Smaller 3D effect */
-    text-shadow: 
-        1px 1px 0 #e84c55,
-        2px 2px 0 #e84c55,
-        3px 3px 0 #e84c55,
-        6px 6px 8px rgba(0,0,0,0.5);
 }
 
 /* --- Skyline Layers --- */
