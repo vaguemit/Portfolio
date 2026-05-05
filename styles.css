@@ -17,12 +17,6 @@ body, html {
     height: 100%;
     overflow: hidden; /* Prevent scrolling for the landing screen */
     font-family: 'Nemesys', sans-serif;
-    cursor: crosshair;
-}
-
-/* Make clickable elements use the pointer */
-a, button, .nav-btn, .cp-btn, .cp-wheel-btn, .cp-wheel-center, .cp-progress-bar, .cp-volume {
-    cursor: pointer;
 }
 
 /* Background — Cyberpunk Sky */
@@ -187,58 +181,7 @@ a, button, .nav-btn, .cp-btn, .cp-wheel-btn, .cp-wheel-center, .cp-progress-bar,
     opacity: 0.6;
 }
 
-/* --- Terminal Hero Section --- */
-.hero-terminal {
-    position: absolute;
-    top: 35%;
-    left: 8%;
-    width: 400px;
-    background: rgba(10, 0, 20, 0.65);
-    border: 1px solid #7b2fff;
-    border-radius: 4px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 20px rgba(123, 47, 255, 0.3), inset 0 0 10px rgba(123, 47, 255, 0.1);
-    font-family: 'Chakra Petch', monospace;
-    z-index: 10;
-    overflow: hidden;
-}
 
-.terminal-header {
-    background: rgba(123, 47, 255, 0.2);
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #7b2fff;
-}
-
-.term-dot {
-    width: 8px; height: 8px; border-radius: 50%; background: #7b2fff; margin-right: 6px; opacity: 0.8;
-    box-shadow: 0 0 5px #7b2fff;
-}
-
-.term-title {
-    margin-left: auto; font-size: 0.65rem; color: #a855f7; letter-spacing: 2px;
-}
-
-.terminal-body {
-    padding: 15px 20px;
-    color: #00ff88;
-    font-size: 0.95rem;
-    min-height: 140px;
-    line-height: 1.6;
-    text-shadow: 0 0 6px rgba(0, 255, 136, 0.6);
-}
-
-.term-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    background: #00ff88;
-    animation: termBlink 1s step-end infinite;
-    vertical-align: bottom;
-    margin-left: 2px;
-}
-@keyframes termBlink { 50% { opacity: 0; } }
 
 /* --- Digital Rain Layer --- */
 .rain-layer {
@@ -250,59 +193,6 @@ a, button, .nav-btn, .cp-btn, .cp-wheel-btn, .cp-wheel-center, .cp-progress-bar,
     pointer-events: none;
     opacity: 0.6;
 }
-
-/* --- Terminal Hero Section --- */
-.hero-terminal {
-    position: absolute;
-    top: 35%;
-    left: 10%;
-    width: 350px;
-    background: rgba(10, 0, 20, 0.65);
-    border: 1px solid #7b2fff;
-    border-radius: 4px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 20px rgba(123, 47, 255, 0.3), inset 0 0 10px rgba(123, 47, 255, 0.1);
-    font-family: 'Chakra Petch', monospace;
-    z-index: 10;
-    overflow: hidden;
-}
-
-.terminal-header {
-    background: rgba(123, 47, 255, 0.2);
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #7b2fff;
-}
-
-.term-dot {
-    width: 8px; height: 8px; border-radius: 50%; background: #7b2fff; margin-right: 6px; opacity: 0.8;
-    box-shadow: 0 0 5px #7b2fff;
-}
-
-.term-title {
-    margin-left: auto; font-size: 0.65rem; color: #a855f7; letter-spacing: 2px;
-}
-
-.terminal-body {
-    padding: 15px 20px;
-    color: #00ff88;
-    font-size: 0.95rem;
-    min-height: 140px;
-    line-height: 1.6;
-    text-shadow: 0 0 6px rgba(0, 255, 136, 0.6);
-}
-
-.term-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    background: #00ff88;
-    animation: termBlink 1s step-end infinite;
-    vertical-align: bottom;
-    margin-left: 2px;
-}
-@keyframes termBlink { 50% { opacity: 0; } }
 
 /* --- Skyline Layers --- */
 .city-skyline {
