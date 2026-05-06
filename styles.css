@@ -222,13 +222,27 @@ body, html {
 .city-back {
     z-index: 5;
     bottom: -8vh; /* Shift back image slightly downwards */
+    width: 105%;
+    left: -2.5%;
+    animation: panBack 60s ease-in-out infinite alternate;
 }
 
 /* Foreground layer styling */
 .city-front {
     z-index: 7;
-    width: 105%;
-    left: -2.5%;
+    width: 110%;
+    left: -5%;
+    animation: panFront 45s ease-in-out infinite alternate;
+}
+
+@keyframes panBack {
+    0% { transform: translateX(2%); }
+    100% { transform: translateX(-2%); }
+}
+
+@keyframes panFront {
+    0% { transform: translateX(-4%); }
+    100% { transform: translateX(4%); }
 }
 
 /* ==============================

@@ -149,22 +149,6 @@
             for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
         });
 
-        /* ===== PARALLAX ===== */
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            const backOffsetX = -(x - 0.5) * 20;
-            const backOffsetY = -(y - 0.5) * 10;
-            const frontOffsetX = (x - 0.5) * 50;
-            const frontOffsetY = (y - 0.5) * 25;
-            const backLayer = document.getElementById('parallax-back');
-            const frontLayer = document.getElementById('parallax-front');
-            if (backLayer && frontLayer) {
-                backLayer.style.transform = `translate(${backOffsetX}px, ${backOffsetY}px)`;
-                frontLayer.style.transform = `translate(${frontOffsetX}px, ${frontOffsetY}px)`;
-            }
-        });
-
         /* ===== MUSIC PLAYER ===== */
         // ---- ADD YOUR TRACKS HERE ----
         const playlist = [
