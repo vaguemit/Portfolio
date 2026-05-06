@@ -183,17 +183,6 @@ body, html {
 
 
 
-/* --- Digital Rain Layer --- */
-.rain-layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Behind city, above sky */
-    pointer-events: none;
-    opacity: 0.6;
-}
-
 /* --- Skyline Layers --- */
 .city-skyline {
     position: absolute;
@@ -224,7 +213,6 @@ body, html {
     bottom: -8vh; /* Shift back image slightly downwards */
     width: 105%;
     left: -2.5%;
-    animation: panBack 60s ease-in-out infinite alternate;
 }
 
 /* Foreground layer styling */
@@ -232,17 +220,6 @@ body, html {
     z-index: 7;
     width: 110%;
     left: -5%;
-    animation: panFront 45s ease-in-out infinite alternate;
-}
-
-@keyframes panBack {
-    0% { transform: translateX(2%); }
-    100% { transform: translateX(-2%); }
-}
-
-@keyframes panFront {
-    0% { transform: translateX(-4%); }
-    100% { transform: translateX(4%); }
 }
 
 /* ==============================

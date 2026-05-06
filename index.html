@@ -15,9 +15,6 @@
     <!-- Sky background gradient -->
     <div class="background-sky"></div>
     
-    <!-- Digital Rain Canvas -->
-    <canvas id="rainCanvas" class="rain-layer"></canvas>
-    
     <!-- Top Navigation Bar (Angled) -->
     <header class="top-nav-container">
         <div class="top-nav-shape">
@@ -112,42 +109,37 @@
 
     <!-- Scripts -->
     <script>
-        /* ===== DIGITAL RAIN ===== */
-        const canvas = document.getElementById('rainCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        /* ===== HYBRID PARALLAX ===== */
+        let mouseOffsetX = 0;
+        let mouseOffsetY = 0;
+        let animTime = 0;
 
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~'.split('');
-        const fontSize = 14;
-        let columns = canvas.width / fontSize;
-        let drops = [];
-        for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
-
-        function drawRain() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(168, 85, 247, 0.6)'; // Purple rain, slightly transparent
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-        setInterval(drawRain, 33);
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            columns = canvas.width / fontSize;
-            drops = [];
-            for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            mouseOffsetX = -(x - 0.5) * 20;
+            mouseOffsetY = -(y - 0.5) * 10;
         });
+
+        function parallaxLoop() {
+            animTime += 0.005; // speed of auto-panning
+            
+            // Auto-panning logic
+            const baseBackX = Math.sin(animTime) * 30; // back layer moves back and forth 30px
+            const baseFrontX = Math.sin(animTime + Math.PI) * 50; // front layer moves opposite
+
+            const backLayer = document.getElementById('parallax-back');
+            const frontLayer = document.getElementById('parallax-front');
+
+            if (backLayer && frontLayer) {
+                // Combine mouse offset with auto-pan offset
+                backLayer.style.transform = `translate(${mouseOffsetX + baseBackX}px, ${mouseOffsetY}px)`;
+                frontLayer.style.transform = `translate(${mouseOffsetX * 2.5 + baseFrontX}px, ${mouseOffsetY * 2.5}px)`;
+            }
+
+            requestAnimationFrame(parallaxLoop);
+        }
+        requestAnimationFrame(parallaxLoop);
 
         /* ===== MUSIC PLAYER ===== */
         // ---- ADD YOUR TRACKS HERE ----
